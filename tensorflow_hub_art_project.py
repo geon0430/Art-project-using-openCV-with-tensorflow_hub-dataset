@@ -41,8 +41,14 @@ def makeArt(content_image_path, style_image_path, output_path):
 
         stylized_image = hub_module(tf.constant(content_image), tf.constant(style_image))[0]
         print("Saving stylized image...")  # 로그 메시지 추가
-        tensor_to_image(stylized_image).save(output_path)
-        print(f"Stylized image saved to {output_path}")
+
+        # Ensure the 'results' directory exists
+        if not os.path.exists('results'):
+            os.makedirs('results')
+
+        # Save the image to the 'results' directory
+        tensor_to_image(stylized_image).save(os.path.join('results', output_path))
+        print(f"Stylized image saved to results/{output_path}")
     except Exception as e:
         print(f"Error occurred: {e}")
 

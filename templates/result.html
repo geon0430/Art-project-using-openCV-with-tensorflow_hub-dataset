@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Kaushan Script', cursive;
+            text-align: center;
+            background-color: #f4f4f4;
+            background-image: url('/static/images.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-size: 1.5em; /* 기본 폰트 크기 키움 */
+        }
+        h1 {
+            font-size: 3.5em; /* 제목 크기 키움 */
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 3px 3px 5px #000;
+        }
+        hr {
+            width: 60%;
+            margin: 30px auto;
+            border-color: #fff;
+            height: 3px; /* 구분선 두께 키움 */
+        }
+        .image-container {
+            display: inline-block;
+            margin: 30px; /* 마진 키움 */
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px; /* 패딩 키움 */
+            border-radius: 15px;
+        }
+        h2 {
+            margin-bottom: 20px; /* 마진 키움 */
+            font-size: 2em; /* 제목 크기 키움 */
+        }
+    </style>
+</head>
+<body>
+    <h1>Images Project</h1>
+    <hr>
+    <div class="image-container">
+        <h2>Content Image</h2>
+        <img src="/uploads/{{ content_path.split('/')[-1] }}" width="350"> <!-- 이미지 크기 키움 -->
+    </div>
+    <div class="image-container">
+        <h2>Style Image</h2>
+        <img src="/uploads/{{ style_path.split('/')[-1] }}" width="350"> <!-- 이미지 크기 키움 -->
+    </div>
+    <div class="image-container">
+        <h2>Output Image</h2>
+        <img src="/results/output.jpg" width="350"> <!-- 이미지 크기 키움 -->
+    </div>
+</body>
+</html>
