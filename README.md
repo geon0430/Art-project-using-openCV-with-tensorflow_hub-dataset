@@ -1,6 +1,8 @@
 # Art-project-using-openCV-with-tensorflow_hub-dataset
 
+
 Dataset: https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2
+
 코드에서 보면 아래와 같이 url을 통해 학습이 끝난 모델을 불러오기에 datasets을 다운받을 필요는 없음
 ```
 hub_handle_2 = 'https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2'
