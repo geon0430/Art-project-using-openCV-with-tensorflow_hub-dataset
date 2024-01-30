@@ -6,7 +6,7 @@ import argparse
 import tensorflow as tf
 import tensorflow_hub as hub
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'  # Disable GPU
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1' 
 hub_handle_2 = 'https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2'
 hub_module = hub.load(hub_handle_2)
 
@@ -40,7 +40,7 @@ def makeArt(content_image_path, style_image_path, output_path):
         style_image = load_img(style_image_path)
 
         stylized_image = hub_module(tf.constant(content_image), tf.constant(style_image))[0]
-        print("Saving stylized image...")  # 로그 메시지 추가
+        print("Saving stylized image...") 
 
         # Ensure the 'results' directory exists
         if not os.path.exists('results'):
@@ -54,7 +54,6 @@ def makeArt(content_image_path, style_image_path, output_path):
 
 
 if __name__ == "__main__":
-    print("Script started...")  # 로그 메시지 추가
     parser = argparse.ArgumentParser(description="Art Making with TensorFlow Hub")
     parser.add_argument("--content", type=str, required=True, help="Path to the content image.")
     parser.add_argument("--style", type=str, required=True, help="Path to the style image.")
