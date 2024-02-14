@@ -12,10 +12,10 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            font-size: 1.5em; /* 기본 폰트 크기 키움 */
+            font-size: 1.5em; 
         }
         h1 {
-            font-size: 3.5em; /* 제목 크기 키움 */
+            font-size: 3.5em; 
             margin-bottom: 30px;
             color: #fff;
             text-shadow: 3px 3px 5px #000;
@@ -24,18 +24,18 @@
             width: 60%;
             margin: 30px auto;
             border-color: #fff;
-            height: 3px; /* 구분선 두께 키움 */
+            height: 3px; 
         }
         .image-container {
             display: inline-block;
-            margin: 30px; /* 마진 키움 */
+            margin: 30px; 
             background-color: rgba(255, 255, 255, 0.8);
-            padding: 30px; /* 패딩 키움 */
+            padding: 30px; 
             border-radius: 15px;
         }
         h2 {
-            margin-bottom: 20px; /* 마진 키움 */
-            font-size: 2em; /* 제목 크기 키움 */
+            margin-bottom: 20px; 
+            font-size: 2em; 
         }
     </style>
 </head>
@@ -44,15 +44,15 @@
     <hr>
     <div class="image-container">
         <h2>Content Image</h2>
-        <img src="/uploads/{{ content_path.split('/')[-1] }}" width="350"> <!-- 이미지 크기 키움 -->
+        <img src="/uploads/{{ content_path.split('/')[-1] }}" width="350"> 
     </div>
     <div class="image-container">
         <h2>Style Image</h2>
-        <img src="/uploads/{{ style_path.split('/')[-1] }}" width="350"> <!-- 이미지 크기 키움 -->
+        <img src="/uploads/{{ style_path.split('/')[-1] }}" width="350"> 
     </div>
     <div class="image-container">
         <h2>Output Image</h2>
-        <img src="/results/output.jpg" width="350"> <!-- 이미지 크기 키움 -->
+        <img src="/results/output.jpg" width="350"> 
     </div>
 </body>
 </html>
