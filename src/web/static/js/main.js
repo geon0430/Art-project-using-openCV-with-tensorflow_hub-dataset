@@ -1,22 +1,62 @@
-function showResults(event) {
-    event.preventDefault();
-    const form = document.getElementById('upload-form');
-    const formData = new FormData(form);
+document.addEventListener("DOMContentLoaded", function() {
+    const uploadPhotoButton = document.getElementById("upload-photo-button");
+    const contentInput = document.getElementById("content");
+    const modal = document.getElementById("custom-modal");
+    const closeModal = document.getElementsByClassName("close")[0];
+    const localVideo = document.getElementById("localVideo");
 
-    fetch('/predict/', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('content-image').src = '/uploads/' + data.content_path.split('/').pop();
-        document.getElementById('style-image').src = '/uploads/' + data.style_path.split('/').pop();
-        document.getElementById('output-image').src = '/results/output.jpg';
+    let pc = null;
+    let localStream = null;
+
+    async function startWebcam() {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        localVideo.srcObject = localStream;
         
-        document.getElementById('results').style.display = 'block';
-        document.getElementById('content-container').style.display = 'inline-block';
-        document.getElementById('style-container').style.display = 'inline-block';
-        document.getElementById('output-container').style.display = 'inline-block';
-    })
-    .catch(error => console.error('Error:', error));
-}
+        pc = new RTCPeerConnection();
+        localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
+
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+
+        const response = await fetch('/offer/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                sdp: pc.localDescription.sdp,
+                type: pc.localDescription.type
+            })
+        });
+
+        const answer = await response.json();
+        await pc.setRemoteDescription(new RTCSessionDescription(answer));
+    }
+
+    uploadPhotoButton.onclick = function() {
+        modal.style.display = "block";
+        startWebcam();
+    }
+
+    closeModal.onclick = function() {
+        modal.style.display = "none";
+        if (localStream) {
+            localStream.getTracks().forEach(track => track.stop());
+        }
+        if (pc) {
+            pc.close();
+        }
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            if (localStream) {
+                localStream.getTracks().forEach(track => track.stop());
+            }
+            if (pc) {
+                pc.close();
+            }
+        }
+    }
+});

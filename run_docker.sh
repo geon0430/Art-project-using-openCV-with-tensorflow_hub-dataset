@@ -1,7 +1,7 @@
 #!/bin/bash
 
 port_num="1"
-CONTAINER_NAME="art_project-stylegan"
+CONTAINER_NAME="ArtMaker_StyleGan_Tensorflow"
 IMAGE_NAME="art-project-stylegan"
 TAG="0.1"
 
@@ -16,9 +16,10 @@ docker run \
     --name ${CONTAINER_NAME} \
     --privileged \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v ${file_path}:/Art-project-using-openCV-tensorflow \
+    -v ${file_path}:/ArtMaker_StyleGan_Tensorflow \
     --shm-size 5g \
     --restart=always \
-    -w /Art-project-using-openCV-tensorflow \
+    -w /ArtMaker_StyleGan_Tensorflow \
     -e DISPLAY=$DISPLAY \
+    --device /dev/video0:/dev/video0 \
     ${IMAGE_NAME}:${TAG}

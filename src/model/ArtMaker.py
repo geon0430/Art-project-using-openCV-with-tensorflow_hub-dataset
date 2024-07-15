@@ -2,19 +2,13 @@ import os
 import cv2
 import PIL.Image
 import numpy as np
-import argparse
 import tensorflow as tf
 import tensorflow_hub as hub
+import argparse
 
 class ArtMaker:
     def __init__(self, hub_handle='https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2'):
-        # Use GPU if available
-        if tf.config.list_physical_devices('GPU'):
-            os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-        else:
-            os.environ['CUDA_VISIBLE_DEVICES'] = '-1'  # Disable GPU
-        
-        # Load TensorFlow Hub module
+        os.environ['CUDA_VISIBLE_DEVICES'] = '0'  # Use GPU if available
         self.hub_module = hub.load(hub_handle)
 
     @staticmethod
@@ -28,22 +22,27 @@ class ArtMaker:
 
     @staticmethod
     def load_img(path_to_img):
-        max_dim = 640
-        img = tf.io.read_file(path_to_img)
-        img = tf.image.decode_image(img, channels=3)
-        img = tf.image.convert_image_dtype(img, tf.float32)
+        try:
+            max_dim = 640
+            img = tf.io.read_file(path_to_img)
+            img = tf.image.decode_image(img, channels=3)
+            img = tf.image.convert_image_dtype(img, tf.float32)
 
-        shape = tf.cast(tf.shape(img)[:-1], tf.float32)
-        long_dim = max(shape)
-        scale = max_dim / long_dim
+            shape = tf.cast(tf.shape(img)[:-1], tf.float32)
+            long_dim = max(shape)
+            scale = max_dim / long_dim
 
-        new_shape = tf.cast(shape * scale, tf.int32)
+            new_shape = tf.cast(shape * scale, tf.int32)
 
-        img = tf.image.resize(img, new_shape)
-        img = img[tf.newaxis, :]
-        return img
+            img = tf.image.resize(img, new_shape)
+            img = img[tf.newaxis, :]
+            return img
+        except Exception as e:
+            print(f"Error loading image {path_to_img}: {e}")
+            raise
 
-    def make_art(self, content_image_path, style_image_path, output_path):
+    def make_art(self, content_image_path, style_image_path):
+        output_path = "./result/result.jpg"
         try:
             content_image = self.load_img(content_image_path)
             style_image = self.load_img(style_image_path)
@@ -59,13 +58,3 @@ class ArtMaker:
             print(f"Stylized image saved to {output_path}")
         except Exception as e:
             print(f"Error occurred: {e}")
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Art Making with TensorFlow Hub")
-    parser.add_argument("--content", type=str, required=True, help="Path to the content image.")
-    parser.add_argument("--style", type=str, required=True, help="Path to the style image.")
-    parser.add_argument("--output", type=str, default="results/output.jpg", help="Path to save the stylized image.")
-    args = parser.parse_args()
-
-    art_maker = ArtMaker()
-    art_maker.make_art(args.content, args.style, args.output)

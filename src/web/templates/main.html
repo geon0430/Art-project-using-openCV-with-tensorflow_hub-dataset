@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Art Making with TensorFlow Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <title>Create Your Own Artwork Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
-    <h1>Images Project</h1>
+    <h2>Create Your Own Artwork Project</h2>
     <hr>
     <form id="upload-form" action="/predict/" enctype="multipart/form-data" method="post" onsubmit="showResults(event)">
         <label for="content">Upload Photo:</label>
-        <input type="file" name="content" id="content" required>
+        <button type="button" id="upload-photo-button">Picture</button>
+        <input type="file" name="content" id="content" style="display: none;" required>
+        
         <label for="style">Upload Picture:</label>
         <input type="file" name="style" id="style" required>
         <input type="submit" value="Predict">
     </form>
+    
+    <div id="description">
+        <h2>Instructions</h2>
+        <p>1. Click "Upload Photo" to take a picture with your camera.</p>
+        <p>2. Choose a desired artwork.</p>
+        <p>3. Click the "Print" button to print and take the photo with you.</p>
+        <img src="/static/image.jpg" alt="Descriptive Image">
+    </div>
+
     <div id="results" style="display: none;">
         <hr>
         <div class="image-container" id="content-container">
@@ -25,11 +36,17 @@
             <h2>Style Image</h2>
             <img id="style-image" src="" width="350">
         </div>
-        <div class="image-container" id="output-container">
-            <h2>Output Image</h2>
-            <img id="output-image" src="/results/output.jpg" width="350">
+    </div>
+    
+    <div id="custom-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Custom Upload</h2>
+            <p>This is a custom upload window. Please select your photo.</p>
+            <video id="localVideo" autoplay playsinline></video>
         </div>
     </div>
-    <script src="/static/js/script.js"></script>
+
+    <script src="/static/js/main.js"></script>
 </body>
 </html>

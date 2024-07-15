@@ -1,0 +1,141 @@
+@font-face {
+    font-family: 'NanumGothicExtraBold';
+    src: url('/static/font/NanumGothicExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'NanumGothic';
+    src: url('/static/font/NanumGothic.ttf') format('truetype');
+}
+
+body {
+    font-family: 'NanumGothic', sans-serif;
+    text-align: center;
+    background-color: #fff; /* Changed to white */
+    font-size: 1.5em; 
+}
+
+h1 {
+    font-size: 3.5em; 
+    margin-top: 0; /* Added to move to the top */
+    margin-bottom: 30px;
+    color: #000; /* Changed color to black for better visibility on white background */
+}
+
+hr {
+    width: 60%;
+    margin: 30px auto;
+    border-color: #000; /* Changed color to black for better visibility */
+    height: 3px;
+}
+
+form {
+    display: inline-block;
+    background-color: #ccc; /* Changed to gray */
+    padding: 30px; 
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Added subtle shadow for better visibility */
+}
+
+label, input[type="file"], input[type="submit"] {
+    margin: 15px; 
+    font-size: 1.3em; 
+}
+
+input[type="submit"] {
+    padding: 15px 30px; 
+    font-size: 1.4em; 
+}
+
+#description {
+    text-align: left;
+    margin: auto;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 15px;
+}
+
+#description h2 {
+    font-family: 'NanumGothicExtraBold', sans-serif;
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+#description p {
+    font-family: 'NanumGothic', sans-serif;
+    font-size: 1.2em;
+    color: #000;
+    margin: 5px 0;
+}
+
+#description img {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.image-container {
+    display: none;
+    margin: 30px; 
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px; 
+    border-radius: 15px;
+}
+
+h2 {
+    font-family: 'NanumGothicExtraBold', sans-serif;
+    margin-bottom: 20px; 
+    font-size: 2em; 
+    color: #000; 
+}
+
+#upload-photo-button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+    padding-top: 60px; 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#localVideo {
+    width: 100%;
+    height: auto;
+}

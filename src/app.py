@@ -5,7 +5,7 @@ from routers import root, post_router, get_router, delete_router, put_router
 from fastapi.staticfiles import StaticFiles
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="/Art-project-using-openCV-tensorflow/src/web/static"), name="static")
+app.mount("/static", StaticFiles(directory="/ArtMaker_StyleGan_Tensorflow/src/web/static"), name="static")
 app.include_router(root)
 app.include_router(post_router)
 app.include_router(get_router)
@@ -14,7 +14,7 @@ app.include_router(put_router)
 
 
 async def startup_event():
-    ini_path = "/Art-project-using-openCV-tensorflow/src/config.ini"
+    ini_path = "/ArtMaker_StyleGan_Tensorflow/src/config.ini"
     config = ConfigManager(ini_path)
     ini_dict = config.get_config_dict()
     logger = setup_logger(ini_dict)
