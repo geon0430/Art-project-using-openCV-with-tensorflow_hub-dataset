@@ -1,0 +1,54 @@
+body {
+    font-family: 'Kaushan Script', cursive;
+    text-align: center;
+    background-color: #f4f4f4;
+    background-image: url('/static/image/images.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-size: 1.5em; 
+}
+
+h1 {
+    font-size: 3.5em; 
+    margin-bottom: 30px;
+    color: #fff;
+    text-shadow: 3px 3px 5px #000;
+}
+
+hr {
+    width: 60%;
+    margin: 30px auto;
+    border-color: #fff;
+    height: 3px;
+}
+
+form {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px; 
+    border-radius: 15px;
+}
+
+label, input[type="file"], input[type="submit"] {
+    margin: 15px; 
+    font-size: 1.3em; 
+}
+
+input[type="submit"] {
+    padding: 15px 30px; 
+    font-size: 1.4em; 
+}
+
+.image-container {
+    display: none;
+    margin: 30px; 
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px; 
+    border-radius: 15px;
+}
+
+h2 {
+    margin-bottom: 20px; 
+    font-size: 2em; 
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Art Making with TensorFlow Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+</head>
+<body>
+    <h1>Images Project</h1>
+    <hr>
+    <form id="upload-form" action="/predict/" enctype="multipart/form-data" method="post" onsubmit="showResults(event)">
+        <label for="content">Upload Photo:</label>
+        <input type="file" name="content" id="content" required>
+        <label for="style">Upload Picture:</label>
+        <input type="file" name="style" id="style" required>
+        <input type="submit" value="Predict">
+    </form>
+    <div id="results" style="display: none;">
+        <hr>
+        <div class="image-container" id="content-container">
+            <h2>Content Image</h2>
+            <img id="content-image" src="" width="350">
+        </div>
+        <div class="image-container" id="style-container">
+            <h2>Style Image</h2>
+            <img id="style-image" src="" width="350">
+        </div>
+        <div class="image-container" id="output-container">
+            <h2>Output Image</h2>
+            <img id="output-image" src="/results/output.jpg" width="350">
+        </div>
+    </div>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
