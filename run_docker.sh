@@ -1,7 +1,7 @@
 #!/bin/bash
 
 port_num="1"
-CONTAINER_NAME="ArtMaker_StyleGan_Tensorflow"
+CONTAINER_NAME="geon_ArtMaker_StyleGan_Tensorflow"
 IMAGE_NAME="art-project-stylegan"
 TAG="0.1"
 

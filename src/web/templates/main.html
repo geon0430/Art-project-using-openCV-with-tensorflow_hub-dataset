@@ -2,30 +2,45 @@
 <html>
 <head>
     <title>Create Your Own Artwork Project</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
     <h2>Create Your Own Artwork Project</h2>
-    <hr>
-    <form id="upload-form" action="/predict/" enctype="multipart/form-data" method="post" onsubmit="showResults(event)">
-        <label for="content">Upload Photo:</label>
-        <button type="button" id="upload-photo-button">Picture</button>
-        <input type="file" name="content" id="content" style="display: none;" required>
-        
-        <label for="style">Upload Picture:</label>
-        <input type="file" name="style" id="style" required>
-        <input type="submit" value="Predict">
-    </form>
-    
+    <div class="form-container">
+        <form id="upload-form" enctype="multipart/form-data" method="post">
+            <div class="top-row">
+                <div class="photo">
+                    <div class="input-group">
+                        <label for="content">Upload Photo</label>
+                    </div>
+                </div>
+                <div class="picture">
+                    <div class="input-group">
+                        <label for="style">Select Picture</label>
+                        <input type="file" name="style" id="style" style="display: none;">
+                    </div>
+                </div>
+            </div>
+            <input type="file" name="content" id="content" style="display: none;">
+            <div class="image-row">
+                <div id="uploaded-image-container" class="image-box">
+                    <img id="uploaded-image" src="" alt="Uploaded Image" style="display: none;">
+                </div>
+                <div id="selected-image-container" class="image-box">
+                    <img id="selected-image" src="" alt="Selected Image" style="display: none;">
+                </div>
+            </div>
+            <div class="bottom-row">
+                <input type="submit" value="Predict">
+            </div>
+        </form>
+    </div>
     <div id="description">
         <h2>Instructions</h2>
-        <p>1. Click "Upload Photo" to take a picture with your camera.</p>
-        <p>2. Choose a desired artwork.</p>
+        <p>1. Click the "Upload Photo" box to take a picture with your camera.</p>
+        <p>2. Click the "Select Picture" box to choose a desired artwork.</p>
         <p>3. Click the "Print" button to print and take the photo with you.</p>
-        <img src="/static/image.jpg" alt="Descriptive Image">
     </div>
-
     <div id="results" style="display: none;">
         <hr>
         <div class="image-container" id="content-container">
@@ -36,17 +51,33 @@
             <h2>Style Image</h2>
             <img id="style-image" src="" width="350">
         </div>
-    </div>
-    
-    <div id="custom-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Custom Upload</h2>
-            <p>This is a custom upload window. Please select your photo.</p>
-            <video id="localVideo" autoplay playsinline></video>
+        <div class="image-container" id="result-container">
+            <img id="result-image" src="" width="350">
+        </div>
+        <div class="image-container" id="qr-container">
+            <h2>QR Code</h2>
+            <img id="qr-image" src="" width="350">
         </div>
     </div>
-
+    <div id="custom-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="webcam-container">
+                <video id="localVideo" autoplay playsinline></video>
+            </div>
+            <div class="button-container">
+                <div class="emoji-button"></div>
+            </div>
+        </div>
+    </div>
+    <div id="result-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="close-result-modal">&times;</span>
+            <div class="result-container">
+                <img id="result-image-modal" src="" alt="Result Image" style="width: 100%;">
+            </div>
+        </div>
+    </div>
     <script src="/static/js/main.js"></script>
 </body>
 </html>

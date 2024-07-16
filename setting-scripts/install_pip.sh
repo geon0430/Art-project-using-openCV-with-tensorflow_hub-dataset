@@ -12,3 +12,5 @@ pip install icecream
 pip install tensorflow
 pip install tensorflow_hub
 pip install aiortc
+pip install qrcode[pil]
+pip install pillow
