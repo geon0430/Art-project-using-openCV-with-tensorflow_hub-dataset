@@ -54,10 +54,6 @@
         <div class="image-container" id="result-container">
             <img id="result-image" src="" width="350">
         </div>
-        <div class="image-container" id="qr-container">
-            <h2>QR Code</h2>
-            <img id="qr-image" src="" width="350">
-        </div>
     </div>
     <div id="custom-modal" class="modal" style="display: none;">
         <div class="modal-content">
@@ -73,8 +69,11 @@
     <div id="result-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close" id="close-result-modal">&times;</span>
+            <div class="qr-container" id="qr-container">
+                <img id="qr-image" src="" alt="QR Code">
+            </div>
             <div class="result-container">
-                <img id="result-image-modal" src="" alt="Result Image" style="width: 100%;">
+                <img id="result-image-modal" src="" alt="Result Image">
             </div>
         </div>
     </div>

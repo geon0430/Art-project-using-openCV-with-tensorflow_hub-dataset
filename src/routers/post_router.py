@@ -63,12 +63,11 @@ async def predict(content_path: str = Form(...), style_path: str = Form(...), lo
         art_maker = ArtMaker()
         output_path = art_maker.make_art(content_abs_path, style_abs_path)
 
-        relative_output_path = os.path.relpath(output_path, BASE_PATH)
-        return {"result_image_path": relative_output_path, "result_filename": os.path.basename(output_path)}
+        filename = os.path.basename(output_path)
+        return {"result_image_filename": filename}
     except Exception as e:
         logger.error(f"predict ERROR | {e}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Failed to process images: {str(e)}")
-
 
     
 @post_router.get("/download/{filename}")

@@ -211,17 +211,16 @@ document.addEventListener("DOMContentLoaded", function() {
             const result = await response.json();
             console.log(result);
 
-            resultImageModal.src = result.result_image_path;
+            resultImageModal.src = `/saved_images/${result.result_image_filename}`;
             resultModal.style.display = "flex";
 
-            const qrResponse = await fetch(`/generate_qr/${result.result_image_path}`);
+            const qrResponse = await fetch(`/generate_qr/${result.result_image_filename}`);
             if (!qrResponse.ok) {
                 throw new Error('Failed to generate QR code');
             }
             const qrResult = await qrResponse.json();
             qrImage.src = `/${qrResult.qr_code_path}`;
             qrContainer.style.display = "block";
-
         } catch (error) {
             console.error('Error processing images:', error);
             alert('Error processing images: ' + error.message);

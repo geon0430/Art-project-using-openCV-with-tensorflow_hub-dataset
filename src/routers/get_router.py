@@ -31,5 +31,6 @@ async def generate_qr(filename: str):
     qr_code_path = os.path.join(BASE_PATH, "saved_images", f"{os.path.splitext(os.path.basename(filename))[0]}_qr.jpg")
 
     qr_path = generate_qr_code(file_url, qr_code_path)
+    print(file_url)
     relative_qr_path = os.path.relpath(qr_path, BASE_PATH)
     return {"qr_code_path": f"{relative_qr_path}"}
