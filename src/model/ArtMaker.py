@@ -3,8 +3,8 @@ import cv2
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
-import argparse
 import warnings
+import argparse
 
 warnings.filterwarnings("ignore", message="The value of the smallest subnormal for <class 'numpy.float32'> type is zero.")
 warnings.filterwarnings("ignore", message="The value of the smallest subnormal for <class 'numpy.float64'> type is zero.")
@@ -35,7 +35,7 @@ class ArtMaker:
         img_rgb = np.expand_dims(img_rgb, axis=0)    
         img_tensor = tf.convert_to_tensor(img_rgb, dtype=tf.float32)
         return img_tensor
-    
+
     @staticmethod
     def postprocess(tensor):
         tensor = tensor.numpy()
@@ -46,7 +46,27 @@ class ArtMaker:
             tensor = tensor[0]
         img_resized = cv2.resize(tensor, (1920, 1080))
         output_data = cv2.cvtColor(img_resized, cv2.COLOR_RGB2BGR)
-        
+        return output_data
+
+    @staticmethod
+    def add_logo(output_data):
+        logo_path = "/ArtMaker_StyleGan_Tensorflow/src/web/static/image/logo.jpg"
+        logo_img = cv2.imread(logo_path, cv2.IMREAD_UNCHANGED)
+        if logo_img is None:
+            raise FileNotFoundError("Logo image not found at the specified path.")
+        logo_img = cv2.resize(logo_img, (160, 90))
+
+        x_offset = output_data.shape[1] - 160
+        y_offset = 0
+
+        if logo_img.shape[2] == 4:
+            overlay = logo_img[..., :3]
+            mask = logo_img[..., 3:]
+            background = output_data[y_offset:y_offset + 90, x_offset:x_offset + 160]
+            combined = background * (1 - mask / 255.0) + overlay * (mask / 255.0)
+            output_data[y_offset:y_offset + 90, x_offset:x_offset + 160] = combined
+        else:
+            output_data[y_offset:y_offset + 90, x_offset:x_offset + 160] = logo_img
         return output_data
 
     @staticmethod
@@ -61,24 +81,33 @@ class ArtMaker:
     def make_art(self, content_image_path, style_image_path):
         output_dir = "/ArtMaker_StyleGan_Tensorflow/src/saved_images"
         output_path = self.get_next_output_path(output_dir)
-        
+
         try:
             content_image = self.read_image(content_image_path)
             content_image = self.preprocess(content_image)
             
             style_image = self.read_image(style_image_path)
-            style_image = self.preprocess(style_image)  
+            style_image = self.preprocess(style_image)
 
             stylized_image = self.hub_module(tf.constant(content_image), tf.constant(style_image))[0]
+            output_data = self.postprocess(stylized_image)
+            output_data = self.add_logo(output_data)  
 
             if not os.path.exists(output_dir):
                 os.makedirs(output_dir)
 
-            output_data = self.postprocess(stylized_image)
-            
             cv2.imwrite(output_path, output_data)
             return output_path
         
         except Exception as e:
             print(f"Error occurred: {e}")
             raise
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='ArtMaker - Apply style transfer to images')
+    parser.add_argument('--content', required=True, help='Path to the content image')
+    parser.add_argument('--style', required=True, help='Path to the style image')
+    args = parser.parse_args()
+
+    art_maker = ArtMaker()
+    output_path = art_maker.make_art(args.content, args.style)
+    print(f"Image saved to {output_path}")

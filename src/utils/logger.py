@@ -120,7 +120,7 @@ class logging_class:
         elif _level == 'ERROR':
             return logging.ERROR
         elif _level == 'CRITICAL':
-            return logging.CRITICAL
+            return logging.CRITICgeonAL
         else:
             assert False, f'Check level {_level}'
 

@@ -4,7 +4,7 @@ apt-get update
 
 # install tools
 apt-get install -y \
-	git curl unzip vim wget yasm tmux 
+	git curl unzip vim wget yasm tmux certbot npm
 
 apt-get install -y \
 			libatlas-base-dev \
@@ -50,5 +50,7 @@ apt-get install -y \
 rm /opt/hpcx/ompi/lib/libmpi.so.40
 apt-get update
 apt-get install -y libgl1-mesa-glx
+
+npm i bootstrap@5.3.3
 
 
