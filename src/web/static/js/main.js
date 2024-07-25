@@ -15,11 +15,17 @@ document.addEventListener("DOMContentLoaded", function() {
     const qrContainer = document.getElementById("qr-container");
     const qrImage = document.getElementById("qr-image");
 
+    const selectPictureModal = document.getElementById("select-picture-modal");
+    const closeSelectPictureModal = selectPictureModal.getElementsByClassName("close")[0];
+    const selectButton = document.getElementById("select-button");
+
+    let selectedImagePath = null;
     let pc = null;
     let localStream = null;
 
     modal.style.display = "none";
     resultModal.style.display = "none";
+    selectPictureModal.style.display = "none";
 
     async function startWebcam() {
         try {
@@ -107,55 +113,28 @@ document.addEventListener("DOMContentLoaded", function() {
         startWebcam();
     }
 
-    selectedImageContainer.onclick = function() {
-        styleInput.click();
-    }
-
-    styleInput.onchange = async function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append('image', file);
-
-            try {
-                const response = await fetch('/save_screenshot/', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to save style image');
-                }
-
-                const result = await response.json();
-                console.log(result);
-
-                selectedImage.src = URL.createObjectURL(file);
-                selectedImage.style.display = "block";
-                selectedImageContainer.style.display = "block";
-
-                localStorage.setItem('style_image_path', result.image_path);
-            } catch (error) {
-                console.error('Error uploading style image:', error);
-                alert('Error uploading style image: ' + error.message);
-            }
-        }
+    selectedImageContainer.onclick = async function() {
+        await loadPictureGrid(); // Ensure the grid is loaded before displaying the modal
+        selectPictureModal.style.display = "flex";
     }
 
     closeModal.onclick = function() {
         modal.style.display = "none";
     }
 
+    closeSelectPictureModal.onclick = function() {
+        selectPictureModal.style.display = "none";
+    }
+
     closeResultModal.onclick = function() {
         resultModal.style.display = "none";
-        // 초기화 코드 추가
         localStorage.removeItem('content_image_path');
         localStorage.removeItem('style_image_path');
         uploadedImage.src = "";
         uploadedImage.style.display = "none";
         selectedImage.src = "";
         selectedImage.style.display = "none";
-        // 파일 입력 초기화
+
         contentInput.value = null;
         styleInput.value = null;
     }
@@ -164,16 +143,17 @@ document.addEventListener("DOMContentLoaded", function() {
         if (event.target == modal) {
             modal.style.display = "none";
         }
+        if (event.target == selectPictureModal) {
+            selectPictureModal.style.display = "none";
+        }
         if (event.target == resultModal) {
             resultModal.style.display = "none";
-            // 초기화 코드 추가
             localStorage.removeItem('content_image_path');
             localStorage.removeItem('style_image_path');
             uploadedImage.src = "";
             uploadedImage.style.display = "none";
             selectedImage.src = "";
             selectedImage.style.display = "none";
-            // 파일 입력 초기화
             contentInput.value = null;
             styleInput.value = null;
         }
@@ -193,6 +173,9 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("Both images are required.");
             return;
         }
+
+        console.log("Sending content path:", contentPath);
+        console.log("Sending style path:", stylePath);
 
         const formData = new FormData();
         formData.append('content_path', contentPath);
@@ -226,4 +209,69 @@ document.addEventListener("DOMContentLoaded", function() {
             alert('Error processing images: ' + error.message);
         }
     }
+
+    async function loadPictureGrid() {
+        const pictureGrid = document.querySelector(".picture-grid");
+        pictureGrid.innerHTML = ""; // Clear previous images
+        const imagePaths = await fetchImagePaths();
+        console.log("Fetched image paths:", imagePaths);
+        imagePaths.forEach((path, index) => {
+            const img = document.createElement("img");
+            img.src = path;
+            img.alt = "Artwork " + (index + 1);
+            img.classList.add("grid-image");
+            img.onload = function() {
+                console.log("Loaded image:", path);
+            };
+            img.onerror = function() {
+                console.error("Error loading image:", path);
+            };
+            img.onclick = function() {
+                if (selectedImagePath) {
+                    document.querySelector(`img[src='${selectedImagePath}']`).classList.remove("selected");
+                }
+                img.classList.add("selected");
+                selectedImagePath = path;
+                localStorage.setItem('style_image_path', path);
+            };
+            img.ondragstart = function(event) {
+                event.preventDefault();
+            };
+            pictureGrid.appendChild(img);
+        });
+
+        if (imagePaths.length <= 4) {
+            pictureGrid.classList.add("four-grid");
+            pictureGrid.classList.remove("nine-grid");
+        } else {
+            pictureGrid.classList.add("nine-grid");
+            pictureGrid.classList.remove("four-grid");
+        }
+    }
+
+    async function fetchImagePaths() {
+        const response = await fetch('/api/get_image_paths');
+        const data = await response.json();
+        return data.paths;
+    }
+
+    selectButton.onclick = function() {
+        if (selectedImagePath) {
+            selectedImage.src = selectedImagePath;
+            selectedImage.style.display = "block";
+            selectedImageContainer.style.display = "block";
+        }
+        selectPictureModal.style.display = "none";
+    }
+
+    // Prevent dragging in picture-view and picture-grid
+    const pictureView = document.querySelector(".picture-view");
+    pictureView.addEventListener('dragstart', function(event) {
+        event.preventDefault();
+    });
+
+    const pictureGrid = document.querySelector(".picture-grid");
+    pictureGrid.addEventListener('dragstart', function(event) {
+        event.preventDefault();
+    });
 });

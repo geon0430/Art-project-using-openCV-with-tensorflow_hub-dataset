@@ -1,13 +1,20 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, status
 from fastapi.responses import JSONResponse, FileResponse
-from typing import Optional, List
-from datetime import datetime
-from utils import get_logger, generate_qr_code
+from fastapi.staticfiles import StaticFiles
+from typing import List
 import os
+from utils import get_logger, generate_qr_code
+
+app = FastAPI()
+
+BASE_PATH = "/ArtMaker_StyleGan_Tensorflow/src"
+static_dir = os.path.join(BASE_PATH, "saved_images/picture")
+if not os.path.isdir(static_dir):
+    os.makedirs(static_dir)
+
+app.mount("/static/image/picture", StaticFiles(directory=static_dir), name="picture")
 
 get_router = APIRouter()
-
-BASE_PATH = "/ArtMaker_StyleGan_Tensorflow/src/"
 
 @get_router.get("/saved_images/{image_name}")
 async def get_result_image(image_name: str, custom_logger=Depends(get_logger)):
@@ -34,3 +41,15 @@ async def generate_qr(filename: str):
     print(file_url)
     relative_qr_path = os.path.relpath(qr_path, BASE_PATH)
     return {"qr_code_path": f"{relative_qr_path}"}
+
+@get_router.get("/api/get_image_paths")
+async def get_image_paths():
+    image_directory = os.path.join(BASE_PATH, "saved_images/picture")
+    try:
+        image_files = [f for f in os.listdir(image_directory) if f.endswith(('.png', '.jpg', '.jpeg'))]
+        image_paths = [f"/static/image/picture/{f}" for f in image_files]
+        return {"paths": image_paths}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to retrieve image paths")
+
+app.include_router(get_router)

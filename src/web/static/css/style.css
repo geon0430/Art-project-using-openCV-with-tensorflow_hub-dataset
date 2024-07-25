@@ -1,5 +1,3 @@
-/* Add this CSS if you need to replicate the exact appearance from the example */
-
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 1rem;
@@ -156,15 +154,14 @@ hr {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     overflow: hidden;
-    cursor: pointer; 
 }
 
 .image-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: none;
 }
+
 
 .bottom-row {
     width: 100%;
@@ -220,6 +217,18 @@ input[type="submit"], #upload-photo-button {
     justify-content: space-between;
     overflow: hidden;
 }
+.select-modal-content {
+    background-color: #fefefe;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #888;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
 
 .close {
     color: #aaa;
@@ -234,6 +243,72 @@ input[type="submit"], #upload-photo-button {
 .close:focus {
     color: black;
     text-decoration: none;
+    cursor: pointer;
+}
+
+.file-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.picture-view {
+    display: flex;
+    flex: 1;
+    overflow: auto;
+    border-bottom: 1px solid #ddd; 
+    user-select: none;
+}
+
+.picture-grid {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+}
+
+.picture-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 1px solid black; 
+}
+
+.picture-view, .picture-grid {
+    user-select: none; /* Prevent text selection */
+}
+
+.grid-image {
+    user-select: none; /* Prevent text selection */
+}
+
+.picture-grid.four-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px; 
+}
+
+.picture-grid.nine-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px; 
+}
+
+.grid-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    user-select: none;
+}
+
+.grid-image.selected {
+    border: 5px solid rgb(255, 0, 0);
 }
 
 .webcam-container {

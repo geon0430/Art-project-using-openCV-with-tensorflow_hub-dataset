@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends, Request, UploadFile, File, Form
 from fastapi.templating import Jinja2Templates
 from utils import get_logger
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 import os
 from utils import WebRTC, generate_qr_code
 from aiortc import RTCSessionDescription
@@ -11,6 +11,7 @@ from PIL import Image
 post_router = APIRouter()
 
 BASE_PATH = "/ArtMaker_StyleGan_Tensorflow/src/"
+STYLE_BASE_PATH = "/ArtMaker_StyleGan_Tensorflow/src/web/"
 
 @post_router.post("/offer/")
 async def offer(request: Request, logger=Depends(get_logger)):
@@ -25,7 +26,7 @@ async def offer(request: Request, logger=Depends(get_logger)):
     except Exception as e:
         logger.error(f"offer ERROR | {e}")
         return {"error": str(e)}
-
+    
 @post_router.post("/save_screenshot/", status_code=status.HTTP_201_CREATED)
 async def save_screenshot_endpoint(image: UploadFile = File(...)):
     if image.content_type not in ["image/jpeg", "image/png"]:
@@ -52,10 +53,11 @@ async def save_screenshot_endpoint(image: UploadFile = File(...)):
 
 
 @post_router.post("/predict/")
-async def predict(content_path: str = Form(...), style_path: str = Form(...), logger=Depends(get_logger)):
+async def predict(content_path: str = Form(...), style_path: str = Form(...)):
     try:
-        content_abs_path = os.path.join(BASE_PATH, content_path)
-        style_abs_path = os.path.join(BASE_PATH, style_path)
+        content_abs_path = os.path.join(BASE_PATH, content_path.lstrip('/'))
+        style_abs_path = os.path.join(STYLE_BASE_PATH, style_path.lstrip('/'))
+        print(f"Received content path: {content_abs_path}, style path: {style_abs_path}") 
 
         if not os.path.exists(content_abs_path) or not os.path.exists(style_abs_path):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="One or both image paths are invalid")
@@ -66,8 +68,9 @@ async def predict(content_path: str = Form(...), style_path: str = Form(...), lo
         filename = os.path.basename(output_path)
         return {"result_image_filename": filename}
     except Exception as e:
-        logger.error(f"predict ERROR | {e}")
+        print(f"Error in predict: {e}")  
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Failed to process images: {str(e)}")
+
 
     
 @post_router.get("/download/{filename}")

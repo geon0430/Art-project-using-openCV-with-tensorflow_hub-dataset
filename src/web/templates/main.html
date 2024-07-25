@@ -1,113 +1,125 @@
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
-    <head><script src="/static/js/color-modes.js"></script>
-
+<head>
+    <script src="/static/js/color-modes.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Jumbotron example · Bootstrap v5.3</title>
+    <title>InBic</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/jumbotron/">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 
-    </head>
-    <body>
-        <main>
-            <div class="container py-4" style="width: 80%;">
-                <header class="pb-3 mb-4 border-bottom">
-                    <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none">
-                        <img src="/static/image/favicon.ico" width="40" height="32" class="me-2" alt="Logo">
-                        <span class="fs-4">InBic</span>
-                    </a>
-                </header>
-
-                <div class="p-3 mb-4 bg-body-tertiary rounded-3">
-                    <div class="container-fluid py-3">
-                        <h1 class="display-5 fw-bold">Create Your Own Artwork Project</h1>
-                        <p class="col-md-8 fs-4 text-start">
-                            1. Click the "Upload Photo box" to take a picture with your camera.<br>
-                            2. Click the "Select Picture box" to choose a desired artwork.<br>
-                            3. You can scan the QR code with your phone to download the image.
-                        </p>
-                    </div>
+</head>
+<body>
+    <main>
+        <div class="container py-4" style="width: 80%;">
+            <header class="pb-3 mb-4 border-bottom">
+                <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none">
+                    <img src="/static/image/favicon.ico" width="40" height="32" class="me-2" alt="Logo">
+                    <span class="fs-4">InBic</span>
+                </a>
+            </header>
+    
+            <div class="p-3 mb-4 bg-body-tertiary rounded-3">
+                <div class="container-fluid py-3">
+                    <h1 class="display-5 fw-bold">Create Your Own Artwork Project</h1>
+                    <p class="col-md-8 fs-4 text-start">
+                        1. Click the "Upload Photo box" to take a picture with your camera.<br>
+                        2. Click the "Select Picture box" to choose a desired artwork.<br>
+                        3. You can scan the QR code with your phone to download the image.
+                    </p>
                 </div>
-
-                <div class="row align-items-md-stretch">
-                    <form id="upload-form" enctype="multipart/form-data" method="post">
-                        <div class="top-row">
-                            <div class="photo">
-                                <div class="input-group">
-                                    <label for="content">Upload Photo</label>
-                                </div>
-                            </div>
-                            <div class="picture">
-                                <div class="input-group">
-                                    <label for="style">Select Picture</label>
-                                    <input type="file" name="style" id="style" style="display: none;">
-                                </div>
+            </div>
+    
+            <div class="row align-items-md-stretch">
+                <form id="upload-form" enctype="multipart/form-data" method="post">
+                    <div class="top-row">
+                        <div class="photo">
+                            <div class="input-group">
+                                <label for="content">Upload Photo</label>
                             </div>
                         </div>
-                        <input type="file" name="content" id="content" style="display: none;">
-                        <div class="image-row">
-                            <div id="uploaded-image-container" class="image-box">
-                                <img id="uploaded-image" src="" alt="Uploaded Image" style="display: none;">
-                            </div>
-                            <div id="selected-image-container" class="image-box">
-                                <img id="selected-image" src="" alt="Selected Image" style="display: none;">
+                        <div class="picture">
+                            <div class="input-group">
+                                <label for="style">Select Picture</label>
+                                <input type="file" name="style" id="style" style="display: none;">
                             </div>
                         </div>
-                        <div class="bottom-row">
-                            <input type="submit" value="Predict" class="btn btn-primary">
+                    </div>
+                    <input type="file" name="content" id="content" style="display: none;">
+                    <div class="image-row">
+                        <div id="uploaded-image-container" class="image-box">
+                            <img id="uploaded-image" src="" alt="Uploaded Image" style="display: none;">
                         </div>
-                    </form>
+                        <div id="selected-image-container" class="image-box">
+                            <img id="selected-image" src="" alt="Selected Image" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="bottom-row">
+                        <input type="submit" value="Predict" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+    
+            <div id="results" style="display: none;">
+                <hr>
+                <div class="image-container" id="content-container">
+                    <h2>Content Image</h2>
+                    <img id="content-image" src="" width="350">
                 </div>
-
-                <div id="results" style="display: none;">
-                    <hr>
-                    <div class="image-container" id="content-container">
-                        <h2>Content Image</h2>
-                        <img id="content-image" src="" width="350">
-                    </div>
-                    <div class="image-container" id="style-container">
-                        <h2>Style Image</h2>
-                        <img id="style-image" src="" width="350">
-                    </div>
-                    <div class="image-container" id="result-container">
-                        <img id="result-image" src="" width="350">
-                    </div>
+                <div class="image-container" id="style-container">
+                    <h2>Style Image</h2>
+                    <img id="style-image" src="" width="350">
                 </div>
-
-                <div id="custom-modal" class="modal" style="display: none;">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <div class="webcam-container">
-                            <video id="localVideo" autoplay playsinline></video>
-                        </div>
-                        <div class="button-container">
-                            <div class="emoji-button"></div>
-                        </div>
-                    </div>
+                <div class="image-container" id="result-container">
+                    <img id="result-image" src="" width="350">
                 </div>
-
-                <div id="result-modal" class="modal" style="display: none;">
-                    <div class="modal-content">
-                        <span class="close" id="close-result-modal">&times;</span>
-                        <div class="qr-container" id="qr-container">
-                            <img id="qr-image" src="" alt="QR Code" style="width: 100px; height: 100px;">
-                        </div>
-                        <div class="result-container">
-                            <img id="result-image-modal" src="" alt="Result Image" style="width: 100%;">
-                        </div>
+            </div>
+    
+            <div id="custom-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div class="webcam-container">
+                        <video id="localVideo" autoplay playsinline></video>
+                    </div>
+                    <div class="button-container">
+                        <div class="emoji-button"></div>
                     </div>
                 </div>
             </div>
-        </main>
-        <script src="/static/js/main.js"></script>
-    </body>
+    
+            <div id="select-picture-modal" class="modal">
+                <div class="select-modal-content">
+                    <span class="close">&times;</span>
+                    <div class="picture-view">
+                        <div class="picture-grid" id="picture-grid">
+                            <!-- 그림 목록을 여기 추가합니다 -->
+                        </div>
+                    </div>
+                    <div class="select-button-container">
+                        <button id="select-button" class="btn btn-primary">Select</button>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="result-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" id="close-result-modal">&times;</span>
+                    <div class="qr-container" id="qr-container">
+                        <img id="qr-image" src="" alt="QR Code" style="width: 100px; height: 100px;">
+                    </div>
+                    <div class="result-container">
+                        <img id="result-image-modal" src="" alt="Result Image" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>    
+</main>
+<script src="/static/js/main.js"></script>
+</body>
 </html>
