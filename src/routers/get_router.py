@@ -32,9 +32,7 @@ async def get_result_image(image_name: str, custom_logger=Depends(get_logger)):
 
 @get_router.get("/generate_qr/{filename:path}")
 async def generate_qr(filename: str):
-    internal_ip = "192.168.10.10"
-    port = 12000
-    file_url = f"https://{internal_ip}:{port}/download/{filename}"
+    file_url = f"https://stylegan.inbic.duckdns.org/download/{filename}"
     qr_code_path = os.path.join(BASE_PATH, "saved_images", f"{os.path.splitext(os.path.basename(filename))[0]}_qr.jpg")
 
     qr_path = generate_qr_code(file_url, qr_code_path)

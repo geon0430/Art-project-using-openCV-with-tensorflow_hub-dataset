@@ -207,7 +207,7 @@ input[type="submit"], #upload-photo-button {
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: #dee2e6;
     width: 100%;
     height: 100%;
     border: 1px solid #888;
@@ -218,7 +218,7 @@ input[type="submit"], #upload-photo-button {
     overflow: hidden;
 }
 .select-modal-content {
-    background-color: #fefefe;
+    background-color: #dee2e6;
     width: 100%;
     height: 100%;
     border: 1px solid #888;
@@ -338,9 +338,11 @@ input[type="submit"], #upload-photo-button {
 .emoji-button {
     width: 60px;
     height: 60px;
-    background-color: red;
+    background-color: rgb(255, 255, 255);
     border-radius: 50%;
     cursor: pointer;
+    border: 2px solid black; 
+    box-shadow: 0 0 0 4px white, 0 0 0 6px black; 
 }
 
 .flash {
@@ -379,6 +381,7 @@ input[type="submit"], #upload-photo-button {
 }
 
 #result-modal .result-container {
+    background-color: #dee2e6;
     display: flex;
     flex-direction: column;
     justify-content: center;
