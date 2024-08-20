@@ -5,16 +5,12 @@ from typing import List
 import os
 from utils import get_logger, generate_qr_code
 
-app = FastAPI()
+get_router = APIRouter()
 
 BASE_PATH = "/ArtMaker_StyleGan_Tensorflow/src"
 static_dir = os.path.join(BASE_PATH, "saved_images/picture")
 if not os.path.isdir(static_dir):
     os.makedirs(static_dir)
-
-app.mount("/static/image/picture", StaticFiles(directory=static_dir), name="picture")
-
-get_router = APIRouter()
 
 @get_router.get("/saved_images/{image_name}")
 async def get_result_image(image_name: str, custom_logger=Depends(get_logger)):
@@ -42,12 +38,13 @@ async def generate_qr(filename: str):
 
 @get_router.get("/api/get_image_paths")
 async def get_image_paths():
-    image_directory = os.path.join(BASE_PATH, "saved_images/picture")
+    image_directory = os.path.join(BASE_PATH, "web/static/image/picture")
+    
     try:
-        image_files = [f for f in os.listdir(image_directory) if f.endswith(('.png', '.jpg', '.jpeg'))]
-        image_paths = [f"/static/image/picture/{f}" for f in image_files]
+        image_files = [f for f in os.listdir(image_directory) if f.endswith(('.png', '.jpg', '.jpeg', '.JPG'))]
+        image_paths = [f"/static/image/picture/{f}" for f in image_files]  
+        print(image_paths)
+        
         return {"paths": image_paths}
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Failed to retrieve image paths")
-
-app.include_router(get_router)
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve image paths: {str(e)}")
