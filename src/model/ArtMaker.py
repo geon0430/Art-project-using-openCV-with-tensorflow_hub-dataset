@@ -50,7 +50,7 @@ class ArtMaker:
 
     @staticmethod
     def add_logo(output_data):
-        logo_path = "/ArtMaker_StyleGan_Tensorflow/src/web/static/image/logo.jpg"
+        logo_path = "/ArtMaker_StyleGan_Tensorflow/src/web/static/image/logo.png"
         logo_img = cv2.imread(logo_path, cv2.IMREAD_UNCHANGED)
         if logo_img is None:
             raise FileNotFoundError("Logo image not found at the specified path.")
