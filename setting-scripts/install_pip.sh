@@ -14,3 +14,5 @@ pip install tensorflow_hub
 pip install aiortc
 pip install qrcode[pil]
 pip install pillow
+pip install --upgrade typing_extensions
+
