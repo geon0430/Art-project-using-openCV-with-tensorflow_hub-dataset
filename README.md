@@ -1,30 +1,24 @@
 # Art-project-using-openCV-with-tensorflow_hub-dataset
+1. Click the "Upload Photo box" to take a picture with your camera.<br>
+2. Click the "Select Picture box" to choose a desired artwork.<br>
+3. You can scan the QR code with your phone to download the image.
 
-
-Dataset: https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2
-
-there is no need to download datasets because the trained model is loaded through the url as shown below.
-```
+```python
 hub_handle_2 = 'https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2'
 hub_module = hub.load(hub_handle_2)
 ```
+
 -----
+
 # Execution
 
-### requirements.txt install
-```
-pip install -r requirements.txt
-```
-### web execution
-```
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+### Web execution
 
+```bash
+bash run_server.sh
 ```
-
 
 ## Result
 
-<img width="400" alt="input" src="https://github.com/geon0430/Art-project-using-openCV-with-tensorflow_hub-dataset/assets/114966864/4737dd61-d9b1-484e-b79f-1ee145a20ad7">   <img width="400" alt="result" src="https://github.com/geon0430/Art-project-using-openCV-with-tensorflow_hub-dataset/assets/114966864/64bbd20a-eef9-4632-a0a9-c083818541d1">
-
-
-
+| ![Image 1](https://github.com/user-attachments/assets/48fe6285-a285-4582-8f30-e55f7359083b) | ![Image 2](https://github.com/user-attachments/assets/0f7c0c9c-6662-4c84-aea6-8039bc69f68b) |
+|:-------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------:|
