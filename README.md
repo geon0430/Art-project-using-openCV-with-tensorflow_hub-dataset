@@ -3,13 +3,6 @@
 2. Click the "Select Picture box" to choose a desired artwork.<br>
 3. You can scan the QR code with your phone to download the image.
 
-```python
-hub_handle_2 = 'https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2'
-hub_module = hub.load(hub_handle_2)
-```
-
------
-
 # Execution
 
 ### Web execution
